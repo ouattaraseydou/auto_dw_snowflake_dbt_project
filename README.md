@@ -20,5 +20,5 @@ The objective is to transform raw automotive business data into reliable analyti
 
 # 🏗️ Architecture
 
-The project follows a modern ELT architecture:
+The project follows a modern ELT architecture: 
 
