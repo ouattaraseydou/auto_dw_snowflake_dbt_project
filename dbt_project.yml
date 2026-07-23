@@ -1,0 +1,41 @@
+name: 'mon_projet_auto'
+version: '1.0.0'
+
+config-version: 2
+
+profile: 'mon_projet_auto'
+
+model-paths: ["models"]
+analysis-paths: ["analyses"]
+test-paths: ["tests"]
+seed-paths: ["seeds"]
+macro-paths: ["macros"]
+snapshot-paths: ["snapshots"]
+
+target-path: "target"
+
+clean-targets:
+  - "target"
+  - "dbt_packages"
+
+models:
+  mon_projet_auto:
+
+    # Couche staging : nettoyage et standardisation des données
+    staging:
+      +materialized: view
+      +schema: STAGING
+
+    # Couche intermédiaire : transformations métier
+    intermediate:
+      +materialized: view
+      +schema: INTERMEDIATE
+
+    # Couche finale : dimensions et tables de faits
+    marts:
+      +materialized: table
+      +schema: MARTS
+
+    # Désactive les modèles d'exemple
+    example:
+      +enabled: false

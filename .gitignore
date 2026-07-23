@@ -1,0 +1,15 @@
+# dbt
+target/
+dbt_packages/
+logs/
+
+# Snowflake credentials
+profiles.yml
+*.pem
+*.key
+
+# Python cache
+__pycache__/
+target/
+dbt_packages/
+logs/

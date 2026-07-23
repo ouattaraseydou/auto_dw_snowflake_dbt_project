@@ -1,0 +1,261 @@
+version: 2
+
+sources:
+
+  - name: raw_auto
+    description: "Tables RAW du projet automobile"
+
+    database: AUTO_PROD
+    schema: RAW
+
+    tables:
+
+
+      # ==================================================
+      # CLIENTS
+      # ==================================================
+
+      - name: RAW_CLIENTS
+        description: "Données brutes des clients"
+
+        columns:
+
+          - name: client_id
+            description: "Identifiant unique du client"
+
+            tests:
+              - not_null
+              - unique
+
+
+          - name: nom
+            description: "Nom du client"
+
+
+          - name: prenom
+            description: "Prénom du client"
+
+
+          - name: ville
+            description: "Ville du client"
+
+
+          - name: code_postal
+            description: "Code postal du client"
+
+
+          - name: date_creation
+            description: "Date de création du compte client"
+
+
+          - name: fidelite
+            description: "Niveau de fidélité du client"
+
+
+
+
+      # ==================================================
+      # VEHICULES
+      # ==================================================
+
+      - name: RAW_VEHICULES
+        description: "Données brutes des véhicules clients"
+
+        columns:
+
+          - name: vin
+            description: "Numéro VIN unique du véhicule"
+
+            tests:
+              - not_null
+              - unique
+
+
+
+          - name: immatriculation
+            description: "Plaque d'immatriculation"
+
+          
+
+
+
+          - name: marque
+            description: "Marque du véhicule"
+
+
+
+          - name: modele
+            description: "Modèle du véhicule"
+
+
+
+          - name: energie
+            description: "Type d'énergie"
+
+
+
+          - name: annee
+            description: "Année de fabrication"
+
+
+
+          - name: client_id
+            description: "Client propriétaire du véhicule"
+
+            tests:
+              - not_null
+
+              - relationships:
+                  arguments:
+                    to: source('raw_auto', 'RAW_CLIENTS')
+                    field: client_id
+
+
+
+
+
+      # ==================================================
+      # ATELIER
+      # ==================================================
+
+      - name: RAW_ATELIER
+        description: "Historique des interventions atelier"
+
+        columns:
+
+          - name: intervention_id
+            description: "Identifiant unique intervention"
+
+            tests:
+              - not_null
+              
+
+
+
+          - name: vin
+            description: "Véhicule concerné par l'intervention"
+
+            tests:
+              - not_null
+
+              - relationships:
+                  arguments:
+                    to: source('raw_auto', 'RAW_VEHICULES')
+                    field: vin
+
+
+
+          - name: date_intervention
+            description: "Date de réparation"
+
+
+
+          - name: type
+            description: "Type d'intervention"
+
+
+
+          - name: mecanicien
+            description: "Mécanicien responsable"
+
+
+
+          - name: duree_heures
+            description: "Durée de l'intervention"
+
+
+
+          - name: cout_mo
+            description: "Coût main d'oeuvre"
+
+
+
+          - name: cout_piece
+            description: "Coût des pièces"
+
+
+
+          - name: tva
+            description: "Taux TVA"
+
+
+
+
+
+
+      # ==================================================
+      # PIECES
+      # ==================================================
+
+      - name: RAW_PIECES
+        description: "Catalogue des pièces automobiles"
+
+        columns:
+
+          - name: piece_ref
+            description: "Référence unique de la pièce"
+
+            tests:
+              - not_null
+              - unique
+
+
+
+          - name: designation
+            description: "Nom de la pièce"
+
+            tests:
+              - not_null
+
+
+
+          - name: famille
+            description: "Famille de la pièce"
+
+            tests:
+              - not_null
+
+
+
+          - name: stock
+            description: "Stock disponible"
+
+            tests:
+              - not_null
+
+
+
+          - name: prix_achat
+            description: "Prix d'achat"
+
+            tests:
+              - not_null
+
+
+
+          - name: prix_vente
+            description: "Prix de vente"
+
+            tests:
+              - not_null
+
+
+
+
+
+      # ==================================================
+      # RAPPELS STELLANTIS JSON
+      # ==================================================
+
+      - name: RAW_RAPPELS_STELLANTIS
+        description: "Campagnes de rappels constructeur Stellantis"
+
+        columns:
+
+          - name: RAW_DATA
+            description: "JSON brut"
+
+            tests:
+              - not_null
+              
+
